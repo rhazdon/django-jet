@@ -14,7 +14,7 @@ class DashboardModule(object):
     """
 
     #: Path to widget's template. There is no need to extend such templates from any base templates.
-    template = 'jet.dashboard/module.html'
+    template = "jet.dashboard/module.html"
     enabled = True
 
     #: Specify if module can be draggable or has static position.
@@ -29,7 +29,7 @@ class DashboardModule(object):
 
     #: Default widget title that will be displayed for widget in the dashboard. User can change it later
     #: for every widget.
-    title = ''
+    title = ""
 
     #: Specify title url. ``None`` if title shouldn't be clickable.
     title_url = None
@@ -116,13 +116,13 @@ class DashboardModule(object):
         if settings:
             return json.dumps(settings, cls=LazyDateTimeEncoder)
         else:
-            return ''
+            return ""
 
     def dump_children(self):
         if self.store_children():
             return json.dumps(self.children, cls=LazyDateTimeEncoder)
         else:
-            return ''
+            return ""
 
     def load_from_model(self):
         self.title = self.model.title
@@ -149,9 +149,7 @@ class DashboardModule(object):
 
     def get_context_data(self):
         context = context_to_dict(self.context)
-        context.update({
-            'module': self
-        })
+        context.update({"module": self})
         return context
 
     def render(self):
@@ -160,13 +158,15 @@ class DashboardModule(object):
 
 
 class LinkListItemForm(forms.Form):
-    url = forms.CharField(label=_('URL'))
-    title = forms.CharField(label=_('Title'))
-    external = forms.BooleanField(label=_('External link'), required=False)
+    url = forms.CharField(label=_("URL"))
+    title = forms.CharField(label=_("Title"))
+    external = forms.BooleanField(label=_("External link"), required=False)
 
 
 class LinkListSettingsForm(forms.Form):
-    layout = forms.ChoiceField(label=_('Layout'), choices=(('stacked', _('Stacked')), ('inline', _('Inline'))))
+    layout = forms.ChoiceField(
+        label=_("Layout"), choices=(("stacked", _("Stacked")), ("inline", _("Inline")))
+    )
 
 
 class LinkList(DashboardModule):
@@ -212,12 +212,12 @@ class LinkList(DashboardModule):
 
     """
 
-    title = _('Links')
-    template = 'jet.dashboard/modules/link_list.html'
+    title = _("Links")
+    template = "jet.dashboard/modules/link_list.html"
 
     #: Specify widget layout.
     #: Allowed values ``stacked`` and ``inline``.
-    layout = 'stacked'
+    layout = "stacked"
 
     #: Links are contained in ``children`` attribute which you can pass as constructor parameter
     #: to make your own preinstalled link lists.
@@ -235,36 +235,36 @@ class LinkList(DashboardModule):
     children = []
     settings_form = LinkListSettingsForm
     child_form = LinkListItemForm
-    child_name = _('Link')
-    child_name_plural = _('Links')
+    child_name = _("Link")
+    child_name_plural = _("Links")
 
     def __init__(self, title=None, children=list(), **kwargs):
         children = list(map(self.parse_link, children))
-        kwargs.update({'children': children})
+        kwargs.update({"children": children})
         super(LinkList, self).__init__(title, **kwargs)
 
     def settings_dict(self):
         return {
-            'draggable': self.draggable,
-            'deletable': self.deletable,
-            'collapsible': self.collapsible,
-            'layout': self.layout
+            "draggable": self.draggable,
+            "deletable": self.deletable,
+            "collapsible": self.collapsible,
+            "layout": self.layout,
         }
 
     def load_settings(self, settings):
-        self.draggable = settings.get('draggable', self.draggable)
-        self.deletable = settings.get('deletable', self.deletable)
-        self.collapsible = settings.get('collapsible', self.collapsible)
-        self.layout = settings.get('layout', self.layout)
+        self.draggable = settings.get("draggable", self.draggable)
+        self.deletable = settings.get("deletable", self.deletable)
+        self.collapsible = settings.get("collapsible", self.collapsible)
+        self.layout = settings.get("layout", self.layout)
 
     def store_children(self):
         return True
 
     def parse_link(self, link):
         if isinstance(link, (tuple, list)):
-            link_dict = {'title': link[0], 'url': link[1]}
+            link_dict = {"title": link[0], "url": link[1]}
             if len(link) >= 3:
-                link_dict['external'] = link[2]
+                link_dict["external"] = link[2]
             return link_dict
         elif isinstance(link, (dict,)):
             return link
@@ -296,8 +296,8 @@ class AppList(DashboardModule):
 
     """
 
-    title = _('Applications')
-    template = 'jet.dashboard/modules/app_list.html'
+    title = _("Applications")
+    template = "jet.dashboard/modules/app_list.html"
 
     #: Specify models which should be displayed. ``models`` is an array of string formatted as ``app_label.model``.
     #: Also its possible to specify all application models with * sign (e.g. ``auth.*``).
@@ -309,32 +309,35 @@ class AppList(DashboardModule):
     hide_empty = True
 
     def settings_dict(self):
-        return {
-            'models': self.models,
-            'exclude': self.exclude
-        }
+        return {"models": self.models, "exclude": self.exclude}
 
     def load_settings(self, settings):
-        self.models = settings.get('models')
-        self.exclude = settings.get('exclude')
+        self.models = settings.get("models")
+        self.exclude = settings.get("exclude")
 
     def init_with_context(self, context):
         app_list = get_app_list(context)
         app_to_remove = []
 
         for app in app_list:
-            app_name = app.get('app_label', app.get('name', ''))
-            app['models'] = filter(
-                lambda model: self.models is None or ('%s.%s' % (app_name, model['object_name'])) in self.models or ('%s.*' % app_name) in self.models,
-                app['models']
+            app_name = app.get("app_label", app.get("name", ""))
+            app["models"] = filter(
+                lambda model: self.models is None
+                or ("%s.%s" % (app_name, model["object_name"])) in self.models
+                or ("%s.*" % app_name) in self.models,
+                app["models"],
             )
-            app['models'] = filter(
-                lambda model: self.exclude is None or (('%s.%s' % (app_name, model['object_name'])) not in self.exclude and ('%s.*' % app_name) not in self.exclude),
-                app['models']
+            app["models"] = filter(
+                lambda model: self.exclude is None
+                or (
+                    ("%s.%s" % (app_name, model["object_name"])) not in self.exclude
+                    and ("%s.*" % app_name) not in self.exclude
+                ),
+                app["models"],
             )
-            app['models'] = list(app['models'])
+            app["models"] = list(app["models"])
 
-            if self.hide_empty and len(list(app['models'])) == 0:
+            if self.hide_empty and len(list(app["models"])) == 0:
                 app_to_remove.append(app)
 
         for app in app_to_remove:
@@ -369,8 +372,8 @@ class ModelList(DashboardModule):
 
     """
 
-    title = _('Models')
-    template = 'jet.dashboard/modules/model_list.html'
+    title = _("Models")
+    template = "jet.dashboard/modules/model_list.html"
 
     #: Specify models which should be displayed. ``models`` is an array of string formatted as ``app_label.model``.
     #: Also its possible to specify all application models with * sign (e.g. ``auth.*``).
@@ -382,38 +385,41 @@ class ModelList(DashboardModule):
     hide_empty = True
 
     def settings_dict(self):
-        return {
-            'models': self.models,
-            'exclude': self.exclude
-        }
+        return {"models": self.models, "exclude": self.exclude}
 
     def load_settings(self, settings):
-        self.models = settings.get('models')
-        self.exclude = settings.get('exclude')
+        self.models = settings.get("models")
+        self.exclude = settings.get("exclude")
 
     def init_with_context(self, context):
         app_list = get_app_list(context)
         models = []
 
         for app in app_list:
-            app_name = app.get('app_label', app.get('name', ''))
-            app['models'] = filter(
-                lambda model: self.models is None or ('%s.%s' % (app_name, model['object_name'])) in self.models or ('%s.*' % app_name) in self.models,
-                app['models']
+            app_name = app.get("app_label", app.get("name", ""))
+            app["models"] = filter(
+                lambda model: self.models is None
+                or ("%s.%s" % (app_name, model["object_name"])) in self.models
+                or ("%s.*" % app_name) in self.models,
+                app["models"],
             )
-            app['models'] = filter(
-                lambda model: self.exclude is None or (('%s.%s' % (app_name, model['object_name'])) not in self.exclude and ('%s.*' % app_name) not in self.exclude),
-                app['models']
+            app["models"] = filter(
+                lambda model: self.exclude is None
+                or (
+                    ("%s.%s" % (app_name, model["object_name"])) not in self.exclude
+                    and ("%s.*" % app_name) not in self.exclude
+                ),
+                app["models"],
             )
-            app['models'] = list(app['models'])
+            app["models"] = list(app["models"])
 
-            models.extend(app['models'])
+            models.extend(app["models"])
 
         self.children = models
 
 
 class RecentActionsSettingsForm(forms.Form):
-    limit = forms.IntegerField(label=_('Items limit'), min_value=1)
+    limit = forms.IntegerField(label=_("Items limit"), min_value=1)
 
 
 class RecentActions(DashboardModule):
@@ -443,8 +449,8 @@ class RecentActions(DashboardModule):
 
     """
 
-    title = _('Recent Actions')
-    template = 'jet.dashboard/modules/recent_actions.html'
+    title = _("Recent Actions")
+    template = "jet.dashboard/modules/recent_actions.html"
 
     #: Number if entries to be shown (may be changed by each user personally).
     limit = 10
@@ -462,38 +468,35 @@ class RecentActions(DashboardModule):
     user = None
 
     def __init__(self, title=None, limit=10, **kwargs):
-        kwargs.update({'limit': limit})
+        kwargs.update({"limit": limit})
         super(RecentActions, self).__init__(title, **kwargs)
 
     def settings_dict(self):
         return {
-            'limit': self.limit,
-            'include_list': self.include_list,
-            'exclude_list': self.exclude_list,
-            'user': self.user
+            "limit": self.limit,
+            "include_list": self.include_list,
+            "exclude_list": self.exclude_list,
+            "user": self.user,
         }
 
     def load_settings(self, settings):
-        self.limit = settings.get('limit', self.limit)
-        self.include_list = settings.get('include_list')
-        self.exclude_list = settings.get('exclude_list')
-        self.user = settings.get('user', None)
+        self.limit = settings.get("limit", self.limit)
+        self.include_list = settings.get("include_list")
+        self.exclude_list = settings.get("exclude_list")
+        self.user = settings.get("user", None)
 
     def init_with_context(self, context):
         def get_qset(list):
             qset = None
             for contenttype in list:
                 try:
-                    app_label, model = contenttype.split('.')
+                    app_label, model = contenttype.split(".")
 
-                    if model == '*':
-                        current_qset = Q(
-                            content_type__app_label=app_label
-                        )
+                    if model == "*":
+                        current_qset = Q(content_type__app_label=app_label)
                     else:
                         current_qset = Q(
-                            content_type__app_label=app_label,
-                            content_type__model=model
+                            content_type__app_label=app_label, content_type__model=model
                         )
                 except:
                     raise ValueError('Invalid contenttype: "%s"' % contenttype)
@@ -507,21 +510,19 @@ class RecentActions(DashboardModule):
         qs = LogEntry.objects
 
         if self.user:
-            qs = qs.filter(
-                user__pk=int(self.user)
-            )
+            qs = qs.filter(user__pk=int(self.user))
 
         if self.include_list:
             qs = qs.filter(get_qset(self.include_list))
         if self.exclude_list:
             qs = qs.exclude(get_qset(self.exclude_list))
 
-        self.children = qs.select_related('content_type', 'user')[:int(self.limit)]
+        self.children = qs.select_related("content_type", "user")[: int(self.limit)]
 
 
 class FeedSettingsForm(forms.Form):
-    limit = forms.IntegerField(label=_('Items limit'), min_value=1)
-    feed_url = forms.URLField(label=_('Feed URL'))
+    limit = forms.IntegerField(label=_("Items limit"), min_value=1)
+    feed_url = forms.URLField(label=_("Feed URL"))
 
 
 class Feed(DashboardModule):
@@ -552,8 +553,8 @@ class Feed(DashboardModule):
 
     """
 
-    title = _('RSS Feed')
-    template = 'jet.dashboard/modules/feed.html'
+    title = _("RSS Feed")
+    template = "jet.dashboard/modules/feed.html"
 
     #: URL of the RSS feed (may be changed by each user personally).
     feed_url = None
@@ -564,18 +565,15 @@ class Feed(DashboardModule):
     ajax_load = True
 
     def __init__(self, title=None, feed_url=None, limit=None, **kwargs):
-        kwargs.update({'feed_url': feed_url, 'limit': limit})
+        kwargs.update({"feed_url": feed_url, "limit": limit})
         super(Feed, self).__init__(title, **kwargs)
 
     def settings_dict(self):
-        return {
-            'feed_url': self.feed_url,
-            'limit': self.limit
-        }
+        return {"feed_url": self.feed_url, "limit": self.limit}
 
     def load_settings(self, settings):
-        self.feed_url = settings.get('feed_url')
-        self.limit = settings.get('limit')
+        self.feed_url = settings.get("feed_url")
+        self.limit = settings.get("limit")
 
     def init_with_context(self, context):
         if self.feed_url is not None:
@@ -585,9 +583,9 @@ class Feed(DashboardModule):
                 feed = feedparser.parse(self.feed_url)
 
                 if self.limit is not None:
-                    entries = feed['entries'][:self.limit]
+                    entries = feed["entries"][: self.limit]
                 else:
-                    entries = feed['entries']
+                    entries = feed["entries"]
 
                 for entry in entries:
                     try:
@@ -597,13 +595,14 @@ class Feed(DashboardModule):
 
                     self.children.append(entry)
             except ImportError:
-                self.children.append({
-                    'title': _('You must install the FeedParser python module'),
-                    'warning': True,
-                })
+                self.children.append(
+                    {
+                        "title": _("You must install the FeedParser python module"),
+                        "warning": True,
+                    }
+                )
         else:
-            self.children.append({
-                'title': _('You must provide a valid feed URL'),
-                'warning': True,
-            })
+            self.children.append(
+                {"title": _("You must provide a valid feed URL"), "warning": True}
+            )
 
