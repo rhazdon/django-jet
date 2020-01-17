@@ -2,8 +2,8 @@
 Django JET
 ==========
 
-.. image:: https://travis-ci.org/geex-arts/django-jet.svg?branch=master
-    :target: https://travis-ci.org/geex-arts/django-jet
+.. image:: https://travis-ci.org/rhazdon/django-jet.svg?branch=master
+    :target: https://travis-ci.org/rhazdon/django-jet
 
 **Modern template for Django admin interface with improved functionality**
 
@@ -29,7 +29,7 @@ and applications without the provisions of the AGPLv3.
     :scale: 50%
     :alt: Logo
     :align: center
-    
+
 * Home page: http://jet.geex-arts.com/
 * **New Jet**: `Live Demo <https://app.jetadmin.io/demo?utm_source=jet&utm_medium=banner&utm_campaign=github&utm_content=link&utm_term=promo>`_
 * Live Demo: http://demo.jet.geex-arts.com/admin/
@@ -57,12 +57,12 @@ Screenshots
     :alt: Screenshot #1
     :align: center
     :target: https://raw.githubusercontent.com/geex-arts/django-jet/static/screen1.png
-    
+
 .. image:: https://raw.githubusercontent.com/geex-arts/django-jet/static/screen2_720.png
     :alt: Screenshot #2
     :align: center
     :target: https://raw.githubusercontent.com/geex-arts/django-jet/static/screen2.png
-    
+
 .. image:: https://raw.githubusercontent.com/geex-arts/django-jet/static/screen3_720.png
     :alt: Screenshot #3
     :align: center
@@ -88,7 +88,7 @@ Installation
         'jet',
         'django.contrib.admin',
     )
-        
+
 * Make sure ``django.template.context_processors.request`` context processor is enabled in settings.py (Django 1.8+ way):
 
 .. code:: python
@@ -135,15 +135,15 @@ Installation
 .. code:: python
 
     python manage.py migrate jet
-    # or 
+    # or
     python manage.py syncdb
-        
+
 * Collect static if you are in production environment:
 
 .. code:: python
 
         python manage.py collectstatic
-        
+
 * Clear your browser cache
 
 Dashboard installation
