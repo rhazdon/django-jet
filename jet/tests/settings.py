@@ -14,7 +14,7 @@ DEBUG_PROPAGATE_EXCEPTIONS = True
 
 ROOT_URLCONF = "jet.tests.urls"
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     "jet.dashboard",
     "jet",
     "django.contrib.auth",
@@ -24,15 +24,16 @@ INSTALLED_APPS = (
     "django.contrib.messages",
     "django.contrib.admin",
     "jet.tests",
-)
+]
 
-MIDDLEWARE = (
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-)
+]
 
 TEMPLATES = [
     {
