@@ -5,10 +5,10 @@ python:
   - 3.7
   - pypy
 env:
-  - DJANGO="<1.11"
-  - DJANGO="<1.12"
-  - DJANGO="<2.1"
-  - DJANGO="<2.2"
+  - DJANGO=">1.11"
+  - DJANGO=">1.12"
+  - DJANGO=">2.1"
+  - DJANGO=">2.2"
 before_install:
   - export DJANGO_SETTINGS_MODULE=jet.tests.settings
 install:
