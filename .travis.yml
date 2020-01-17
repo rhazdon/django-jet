@@ -2,7 +2,6 @@ language: python
 python:
   - 3.6
   - 3.7
-  - pypy
 env:
   - DJANGO="~=1.11"
   - DJANGO="~=2.2"
