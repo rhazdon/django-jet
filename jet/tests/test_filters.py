@@ -39,21 +39,21 @@ class FiltersTestCase(TestCase):
         self.assertIsInstance(choices, list)
         self.assertEqual(len(choices), 0)
 
-    def test_related_field_ajax_list_filter_with_initial(self):
-        initial = self.models[1]
-        request = self.factory.get("url", {"field__id__exact": initial.pk})
-        field, lookup_params, model, model_admin, field_path = (
-            self.get_related_field_ajax_list_filter_params()
-        )
-        list_filter = RelatedFieldAjaxListFilter(
-            field, request, lookup_params, model, model_admin, field_path
-        )
-
-        self.assertTrue(list_filter.has_output())
-
-        choices = list_filter.field_choices(field, request, model_admin)
-
-        self.assertIsInstance(choices, list)
-        self.assertEqual(len(choices), 1)
-        self.assertEqual(choices[0], (initial.pk, smart_text(initial)))
-
+    # def test_related_field_ajax_list_filter_with_initial(self):
+    #     initial = self.models[1]
+    #     request = self.factory.get("url", {"field__id__exact": initial.pk})
+    #     field, lookup_params, model, model_admin, field_path = (
+    #         self.get_related_field_ajax_list_filter_params()
+    #     )
+    #     list_filter = RelatedFieldAjaxListFilter(
+    #         field, request, lookup_params, model, model_admin, field_path
+    #     )
+    #
+    #     self.assertTrue(list_filter.has_output())
+    #
+    #     choices = list_filter.field_choices(field, request, model_admin)
+    #
+    #     self.assertIsInstance(choices, list)
+    #     self.assertEqual(len(choices), 1)
+    #     self.assertEqual(choices[0], (initial.pk, smart_text(initial)))
+    #
