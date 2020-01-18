@@ -110,8 +110,6 @@ Installation
 .. code:: python
 
     python manage.py migrate jet
-    # or
-    python manage.py syncdb
 
 * Collect static if you are in production environment:
 
@@ -151,19 +149,11 @@ Dashboard installation
         ...
     )
 
-* **For Google Analytics widgets only** install python package:
-
-.. code::
-
-    pip install google-api-python-client==1.4.1
-
 * Create database tables:
 
 .. code:: python
 
     python manage.py migrate dashboard
-    # or
-    python manage.py syncdb
 
 * Collect static if you are in production environment:
 
