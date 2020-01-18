@@ -66,53 +66,53 @@ class TagsTestCase(TestCase):
 
         self.assertEqual(len(choices), len(self.models) + 1)
 
-    # def test_jet_sibling_object_next_url(self):
-    #     instance = self.models[0]
-    #     ordering_field = 1  # field1 in list_display
-    #     preserved_filters = "_changelist_filters=o%%3D%d" % ordering_field
-    #
-    #     expected_url = (
-    #         reverse(
-    #             "admin:%s_%s_change"
-    #             % (TestModel._meta.app_label, TestModel._meta.model_name),
-    #             args=(self.models[1].pk,),
-    #         )
-    #         + "?"
-    #         + preserved_filters
-    #     )
-    #
-    #     context = {
-    #         "original": instance,
-    #         "preserved_filters": preserved_filters,
-    #         "request": RequestFactory().get(expected_url),
-    #     }
-    #
-    #     actual_url = jet_next_object(context)["url"]
-    #
-    #     self.assertEqual(actual_url, expected_url)
-    #
-    # def test_jet_sibling_object_previous_url(self):
-    #     instance = self.models[0]
-    #     ordering_field = 1  # field1 in list_display
-    #     preserved_filters = "_changelist_filters=o%%3D%d" % ordering_field
-    #
-    #     changelist_url = (
-    #         reverse(
-    #             "admin:%s_%s_change"
-    #             % (TestModel._meta.app_label, TestModel._meta.model_name),
-    #             args=(self.models[1].pk,),
-    #         )
-    #         + "?"
-    #         + preserved_filters
-    #     )
-    #
-    #     context = {
-    #         "original": instance,
-    #         "preserved_filters": preserved_filters,
-    #         "request": RequestFactory().get(changelist_url),
-    #     }
-    #
-    #     previous_object = jet_previous_object(context)
-    #     expected_object = None
-    #
-    #     self.assertEqual(previous_object, expected_object)
+    def test_jet_sibling_object_next_url(self):
+        instance = self.models[0]
+        ordering_field = 1  # field1 in list_display
+        preserved_filters = "_changelist_filters=o%%3D%d" % ordering_field
+
+        expected_url = (
+            reverse(
+                "admin:%s_%s_change"
+                % (TestModel._meta.app_label, TestModel._meta.model_name),
+                args=(self.models[1].pk,),
+            )
+            + "?"
+            + preserved_filters
+        )
+
+        context = {
+            "original": instance,
+            "preserved_filters": preserved_filters,
+            "request": RequestFactory().get(expected_url),
+        }
+
+        actual_url = jet_next_object(context)["url"]
+
+        self.assertEqual(actual_url, expected_url)
+
+    def test_jet_sibling_object_previous_url(self):
+        instance = self.models[0]
+        ordering_field = 1  # field1 in list_display
+        preserved_filters = "_changelist_filters=o%%3D%d" % ordering_field
+
+        changelist_url = (
+            reverse(
+                "admin:%s_%s_change"
+                % (TestModel._meta.app_label, TestModel._meta.model_name),
+                args=(self.models[1].pk,),
+            )
+            + "?"
+            + preserved_filters
+        )
+
+        context = {
+            "original": instance,
+            "preserved_filters": preserved_filters,
+            "request": RequestFactory().get(changelist_url),
+        }
+
+        previous_object = jet_previous_object(context)
+        expected_object = None
+
+        self.assertEqual(previous_object, expected_object)
