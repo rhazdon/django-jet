@@ -15,6 +15,8 @@ from django.utils.formats import get_format
 from django.utils.safestring import mark_safe
 from django.utils.encoding import smart_text
 
+from urllib.parse import parse_qsl
+
 from jet import settings, VERSION
 from jet.models import Bookmark
 from jet.utils import (
@@ -24,11 +26,6 @@ from jet.utils import (
     get_admin_site,
     get_menu_items,
 )
-
-try:
-    from urllib.parse import parse_qsl
-except ImportError:
-    from urlparse import parse_qsl
 
 
 register = template.Library()
