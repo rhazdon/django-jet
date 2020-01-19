@@ -8,7 +8,6 @@ from django.contrib import admin, messages
 
 from django.contrib.admin import AdminSite
 from django.contrib.admin.options import IncorrectLookupParameters
-
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
 from django.template import Context
@@ -53,12 +52,7 @@ def get_app_list(context, order=True):
     app_dict = {}
     for model, model_admin in admin_site._registry.items():
         app_label = model._meta.app_label
-        try:
-            has_module_perms = model_admin.has_module_permission(request)
-        except AttributeError:
-            has_module_perms = request.user.has_module_perms(
-                app_label
-            )  # Fix Django < 1.8 issue
+        has_module_perms = model_admin.has_module_permission(request)
 
         if has_module_perms:
             perms = model_admin.get_model_perms(request)
@@ -130,7 +124,7 @@ def get_admin_site(context):
         for func_closure in index_resolver.func.__closure__:
             if isinstance(func_closure.cell_contents, AdminSite):
                 return func_closure.cell_contents
-    except:
+    except Exception:
         pass
 
     return admin.site

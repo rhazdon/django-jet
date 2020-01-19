@@ -5,6 +5,9 @@ from django.urls import reverse
 from django.forms.formsets import formset_factory
 from django.http import HttpResponseRedirect
 from django.views.decorators.http import require_POST, require_GET
+from django.views.generic import UpdateView
+from django.utils.translation import ugettext_lazy as _
+
 from jet.dashboard.forms import (
     UpdateDashboardModulesForm,
     AddUserDashboardModuleForm,
@@ -19,8 +22,6 @@ from jet.utils import (
     SuccessMessageMixin,
     user_is_authenticated,
 )
-from django.views.generic import UpdateView
-from django.utils.translation import ugettext_lazy as _
 
 
 class UpdateDashboardModuleView(SuccessMessageMixin, UpdateView):

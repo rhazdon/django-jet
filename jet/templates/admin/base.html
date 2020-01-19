@@ -125,37 +125,6 @@
             {% jet_delete_confirmation_context as delete_confirmation_context %}
             {{ delete_confirmation_context }}
 
-            {% jet_change_form_sibling_links_enabled as show_siblings %}
-            {% if change and show_siblings %}
-                <div class="changeform-navigation">
-                    {% spaceless %}
-                        {% jet_previous_object as sibling %}
-                        <a{% if sibling.url %} href="{{ sibling.url }}"{% endif %} class="changeform-navigation-button segmented-button left{% if not sibling %} disabled{% endif %}" title="{{ sibling.label }}">
-                            <span class="changeform-navigation-button-icon left icon-arrow-left"></span>
-                            <span class="changeform-navigation-button-label">
-                                {% if sibling %}
-                                    {{ sibling.label }}
-                                {% else %}
-                                    ---
-                                {% endif %}
-                            </span>
-                        </a>
-
-                        {% jet_next_object as sibling %}
-                        <a{% if sibling.url %} href="{{ sibling.url }}"{% endif %} class="changeform-navigation-button segmented-button right{% if not sibling %} disabled{% endif %}" title="{{ sibling.label }}">
-                            <span class="changeform-navigation-button-icon right icon-arrow-right"></span>
-                            <span class="changeform-navigation-button-label">
-                                {% if sibling %}
-                                    {{ sibling.label }}
-                                {% else %}
-                                    ---
-                                {% endif %}
-                            </span>
-                        </a>
-                    {% endspaceless %}
-                </div>
-            {% endif %}
-
             {% jet_get_side_menu_compact as SIDE_MENU_COMPACT %}
             {% if not is_popup %}
                 <div class="related-popup-container scrollable">

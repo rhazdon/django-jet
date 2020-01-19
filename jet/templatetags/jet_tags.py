@@ -2,6 +2,7 @@ import json
 import os
 
 from django import template
+from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.forms import (
     CheckboxInput,
     ModelChoiceField,
@@ -9,7 +10,6 @@ from django.forms import (
     ModelMultipleChoiceField,
     SelectMultiple,
 )
-from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.urls import reverse
 from django.utils.formats import get_format
 from django.utils.safestring import mark_safe
@@ -168,70 +168,6 @@ def jet_append_version(url):
 @assignment_tag
 def jet_get_side_menu_compact():
     return settings.JET_SIDE_MENU_COMPACT
-
-
-@assignment_tag
-def jet_change_form_sibling_links_enabled():
-    return settings.JET_CHANGE_FORM_SIBLING_LINKS
-
-
-def jet_sibling_object(context, next):
-    original = context.get("original")
-
-    if not original:
-        return
-
-    model = type(original)
-    preserved_filters_plain = context.get("preserved_filters", "")
-    preserved_filters = dict(parse_qsl(preserved_filters_plain))
-    admin_site = get_admin_site(context)
-
-    if admin_site is None:
-        return
-
-    request = context.get("request")
-    queryset = get_model_queryset(
-        admin_site, model, request, preserved_filters=preserved_filters
-    )
-
-    if queryset is None:
-        return
-
-    sibling_object = None
-    object_pks = list(queryset.values_list("pk", flat=True))
-
-    try:
-        index = object_pks.index(original.pk)
-        sibling_index = index + 1 if next else index - 1
-        exists = sibling_index < len(object_pks) if next else sibling_index >= 0
-        sibling_object = queryset.get(pk=object_pks[sibling_index]) if exists else None
-    except ValueError:
-        pass
-
-    if sibling_object is None:
-        return
-
-    url = reverse(
-        "%s:%s_%s_change"
-        % (admin_site.name, model._meta.app_label, model._meta.model_name),
-        args=(sibling_object.pk,),
-    )
-
-    if preserved_filters_plain != "":
-        url += "?" + preserved_filters_plain
-
-    return {"label": str(sibling_object), "url": url}
-
-
-@assignment_tag(takes_context=True)
-def jet_previous_object(context):
-    return jet_sibling_object(context, False)
-
-
-@assignment_tag(takes_context=True)
-def jet_next_object(context):
-    return jet_sibling_object(context, True)
-
 
 @assignment_tag(takes_context=True)
 def jet_popup_response_data(context):

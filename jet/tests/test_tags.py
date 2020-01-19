@@ -1,12 +1,8 @@
 from django import forms
 from django.test import TestCase
-from django.test.client import RequestFactory
-from django.urls import reverse
 
 from jet.templatetags.jet_tags import (
     jet_select2_lookups,
-    jet_next_object,
-    jet_previous_object,
 )
 from jet.tests.models import TestModel, SearchableTestModel
 
