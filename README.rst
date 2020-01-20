@@ -160,6 +160,3 @@ Dashboard installation
 .. code:: python
 
         python manage.py collectstatic
-
-
-
