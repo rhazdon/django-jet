@@ -160,9 +160,9 @@ def jet_get_current_version():
 @register.filter
 def jet_append_version(url):
     if "?" in url:
-        return "%s&v=%s" % (url, VERSION)
+        return "{0}&v={1}".format(url, VERSION)
     else:
-        return "%s?v=%s" % (url, VERSION)
+        return "{0}?v={1}".format(url, VERSION)
 
 
 @assignment_tag
