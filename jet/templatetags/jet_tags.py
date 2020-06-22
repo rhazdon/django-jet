@@ -153,21 +153,9 @@ def jet_get_themes():
 
 
 @assignment_tag
-def jet_get_current_version():
-    return VERSION
-
-
-@register.filter
-def jet_append_version(url):
-    if "?" in url:
-        return "{0}&v={1}".format(url, VERSION)
-    else:
-        return "{0}?v={1}".format(url, VERSION)
-
-
-@assignment_tag
 def jet_get_side_menu_compact():
     return settings.JET_SIDE_MENU_COMPACT
+
 
 @assignment_tag(takes_context=True)
 def jet_popup_response_data(context):
