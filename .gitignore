@@ -144,6 +144,8 @@ dmypy.json
 # pytype static type analyzer
 .pytype/
 
+*.sql
+
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
@@ -188,7 +190,7 @@ dmypy.json
 cmake-build-*/
 
 # Mongo Explorer plugin
-.idea/**/mongoSettings.xml
+.idea
 
 # File-based project format
 *.iws
@@ -220,25 +222,6 @@ fabric.properties
 ### Intellij Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
-# *.iml
-# modules.xml
-# .idea/misc.xml
-# *.ipr
-
-# Sonarlint plugin
-.idea/**/sonarlint/
-
-# SonarQube Plugin
-.idea/**/sonarIssues.xml
-
-# Markdown Navigator plugin
-.idea/**/markdown-navigator.xml
-.idea/**/markdown-navigator-enh.xml
-.idea/**/markdown-navigator/
-
-# Cache file creation bug
-# See https://youtrack.jetbrains.com/issue/JBR-2257
-.idea/$CACHE_FILE$
 
 ### macOS ###
 # General
@@ -390,10 +373,6 @@ dist
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,macos,django,node,yarn
-
-
-# IntelliJ Idea folder
-.idea
 
 # VSCode folder
 .vscode
