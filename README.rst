@@ -38,24 +38,6 @@ Why Django JET?
 * Autocompletion
 * Handy controls
 
-Screenshots
-===========
-
-.. image:: https://raw.githubusercontent.com/geex-arts/django-jet/static/screen1_720.png
-    :alt: Screenshot #1
-    :align: center
-    :target: https://raw.githubusercontent.com/geex-arts/django-jet/static/screen1.png
-
-.. image:: https://raw.githubusercontent.com/geex-arts/django-jet/static/screen2_720.png
-    :alt: Screenshot #2
-    :align: center
-    :target: https://raw.githubusercontent.com/geex-arts/django-jet/static/screen2.png
-
-.. image:: https://raw.githubusercontent.com/geex-arts/django-jet/static/screen3_720.png
-    :alt: Screenshot #3
-    :align: center
-    :target: https://raw.githubusercontent.com/geex-arts/django-jet/static/screen3.png
-
 Installation
 ============
 

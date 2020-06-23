@@ -32,6 +32,7 @@
             var TIME_FORMAT = "{{ time_format }}";
             var DATETIME_FORMAT = "{{ datetime_format }}";
         </script>
+
         <script type="text/javascript" src="{% url 'jet:jsi18n' %}"></script>
         <script src="{% static "jet/js/build/bundle.min.js" %}"></script>
 
@@ -362,8 +363,7 @@
                                        data-select2-stylesheet="{% static "jet/css/themes/"|add:conf_theme.theme|add:"/select2.theme.css" %}"
                                        data-jquery-ui-stylesheet="{% static "jet/css/themes/"|add:conf_theme.theme|add:"/jquery-ui.theme.css" %}"
                                        {% if conf_theme.title %} title="{{ conf_theme.title }}"{% endif %}
-                                       style="background-color: {{ conf_theme.color|default:"white" }};"
-                                            ></a>
+                                       style="background-color: {{ conf_theme.color|default:"white" }};"></a>
                                 {% endif %}
                             {% endfor %}
                         {% endspaceless %}
