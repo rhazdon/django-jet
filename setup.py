@@ -12,10 +12,6 @@ def read(fname):
     return file.read()
 
 
-def get_install_requires():
-    return ["Django", "django-admin-rangefilter"]
-
-
 setup(
     name="django-jet",
     version=__import__("jet").VERSION,
@@ -44,5 +40,5 @@ setup(
     ],
     zip_safe=False,
     include_package_data=True,
-    install_requires=get_install_requires(),
+    install_requires=["Django", "django-admin-rangefilter"],
 )
