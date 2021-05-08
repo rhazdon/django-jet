@@ -40,5 +40,5 @@ setup(
     ],
     zip_safe=False,
     include_package_data=True,
-    install_requires=["Django", "django-admin-rangefilter"],
+    install_requires=["Django>=3.2", "django-admin-rangefilter>=0.8"],
 )
